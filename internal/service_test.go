@@ -20,8 +20,8 @@ func TestService_When_ReceivedMessage_IsOk_Then_Returns_Ok(t *testing.T) {
 	// When
 	list, err := vwapcalculator.NewList([]vwapcalculator.DataPoint{}, 3)
 	service := internal.NewService(&clientMock, []string{"BTC-USD"}, &list)
-
-	err = service.GetTrading(ctx)
+	tradingReceiver := make(chan websocket.Response, 1)
+	err = service.ExecuteEngine(ctx, tradingReceiver)
 
 	// Then
 	require.NoError(t, err)
@@ -38,7 +38,8 @@ func TestService_When_ReceivedMessage_IsWrong_Then_Returns_Error(t *testing.T) {
 	// When
 	list, err := vwapcalculator.NewList([]vwapcalculator.DataPoint{}, 3)
 	service := internal.NewService(&clientMock, []string{"BTC-USD"}, &list)
-	err = service.GetTrading(ctx)
+	tradingReceiver := make(chan websocket.Response, 1)
+	err = service.ExecuteEngine(ctx, tradingReceiver)
 
 	// Then
 	require.Error(t, err)

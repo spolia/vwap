@@ -22,7 +22,7 @@ func NewClient(conn *ws.Conn) websocket.Client {
 }
 
 // Subscribe subscribes to the coinbase websocket.
-func (c *client) Subscribe(ctx context.Context, tradingPairs []string, tradingGenerator chan websocket.Response) error {
+func (c *client) Subscribe(ctx context.Context, tradingPairs []string, tradingSender chan websocket.Response) error {
 	if len(tradingPairs) == 0 {
 		return xerrors.New("client: there is no trading pairs")
 	}
@@ -61,19 +61,15 @@ func (c *client) Subscribe(ctx context.Context, tradingPairs []string, tradingGe
 					log.Printf("failed reading messages: %s", err)
 					return
 				}
-				tradingGenerator <- toWebsocketResponse(message)
+				tradingSender <- websocket.Response{
+					Type:      message.Type,
+					Size:      message.Size,
+					Price:     message.Price,
+					ProductID: message.ProductID,
+				}
 			}
 		}
 	}()
 
 	return nil
-}
-
-func toWebsocketResponse(res Response) websocket.Response {
-	return websocket.Response{
-		Type:      res.Type,
-		Size:      res.Size,
-		Price:     res.Price,
-		ProductID: res.ProductID,
-	}
 }

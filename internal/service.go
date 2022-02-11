@@ -26,8 +26,8 @@ func NewService(webSocket websocket.Client, tradingPairs []string, list *vwap.Li
 	}
 }
 
-// GetTrading execute the trading task
-func (s *Service) GetTrading(ctx context.Context, tradingReceiver chan websocket.Response) error {
+// ExecuteEngine execute the vwap task
+func (s *Service) ExecuteEngine(ctx context.Context, tradingReceiver chan websocket.Response) error {
 	if err := s.webSocketClient.Subscribe(ctx, s.tradingPairs, tradingReceiver); err != nil {
 		return xerrors.Errorf("service: %w", err)
 	}
