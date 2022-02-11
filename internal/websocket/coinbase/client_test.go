@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestSubscribe_WebsocketConection_Ok(t *testing.T) {
+func TestSubscribe_WebsocketConnection_Ok(t *testing.T) {
 	// Given
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -30,7 +30,7 @@ func TestSubscribe_WebsocketConection_Ok(t *testing.T) {
 
 }
 
-func TestSubscribe_WebsocketConection_Fail(t *testing.T) {
+func TestSubscribe_WebsocketConnection_Fail(t *testing.T) {
 	// Given
 	tradingReceiver := make(chan websocket.Response)
 	conn, _, err := ws.DefaultDialer.Dial(coinbase.DefaultURL, nil)
