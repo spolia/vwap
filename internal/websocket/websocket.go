@@ -10,5 +10,5 @@ type Response struct {
 }
 
 type Client interface {
-	Subscribe(ctx context.Context, tradingPairs []string, tradingGenerator chan Response) error
+	Subscribe(ctx context.Context, tradingPairs []string, tradingSender chan Response) error
 }
