@@ -21,8 +21,9 @@ const (
 func main() {
 	ctx := context.Background()
 
-	fmt.Println("trading pair: ", defaultTradingPairs, "subscribe to coinbase websocket url:", coinbase.DefaultURL, "with a window size: ", defaultWindowSize)
-	tradingPairsArr := strings.Split(defaultTradingPairs, ",")
+	fmt.Println("trading pair: ", defaultTradingPairs,
+		"subscribe to coinbase websocket url:",
+		coinbase.DefaultURL, "with a window size: ", defaultWindowSize)
 
 	conn, _, err := ws.DefaultDialer.Dial(coinbase.DefaultURL, nil)
 	if err != nil {
@@ -34,10 +35,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	service := internal.NewService(coinbase.NewClient(conn), tradingPairsArr, &list)
+	service := internal.NewService(coinbase.NewClient(conn), strings.Split(defaultTradingPairs, ","), &list)
 	tradingReceiver := make(chan websocket.Response, 1)
 
-	if err = service.GetTrading(ctx, tradingReceiver); err != nil {
+	if err = service.ExecuteEngine(ctx, tradingReceiver); err != nil {
 		log.Fatal(err)
 	}
 }
