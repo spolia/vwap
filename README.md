@@ -41,3 +41,7 @@ The service is composed of two main components:
 ## Improvements
 
 It is necessary to improve the test cases to cover all border cases. 
+
+## More information
+
+- [Coinbase websocket Channels](https://docs.cloud.coinbase.com/exchange/docs/websocket-channels#match) 
