@@ -59,7 +59,7 @@ func (c *client) Subscribe(ctx context.Context, tradingPairs []string, tradingSe
 				var message Response
 				if err := c.conn.ReadJSON(&message); err != nil {
 					log.Printf("failed reading messages: %s", err)
-					return
+					continue
 				}
 				tradingSender <- websocket.Response{
 					Type:      message.Type,
